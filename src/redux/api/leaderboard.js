@@ -1,15 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-/* const generateQueryStr = (baseString, query) => {
-  const queryString =
-    baseString +
-    Object.entries(query)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("&");
-
-  return queryString;
-}; */
-
 export const leaderboardApi = createApi({
   reducerPath: "valorantLeaderboardApi",
   baseQuery: fetchBaseQuery({
@@ -18,7 +8,16 @@ export const leaderboardApi = createApi({
 
   endpoints: (builder) => ({
     getValorantLeaderboard: builder.query({
-      query: (start) => ({url: `valorant?start=${start}`}),
+      query: ({start}) => ({url: `valorant?start=${start}`}),
+      merge: (current, result) => {
+        console.log('merge')
+        console.log({current})
+        current.players.push(...result)
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        console.log('reftech?', JSON.stringify(currentArg) !== JSON.stringify(previousArg))
+        return JSON.stringify(currentArg) !== JSON.stringify(previousArg)
+      }
     }),
   }),
 });

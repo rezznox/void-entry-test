@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
-const parsePaginationParams = (searchParams, selectOther) => {
+const parsePaginationParams = (searchParams) => {
   const { start: startP } = searchParams;
   const startInt = parseInt(startP);
-  const start = isNaN(startInt) ? 0 : startInt;
+  const start = isNaN(startInt) ? 1 : startInt;
   return { start };
 };
 
@@ -19,7 +19,7 @@ export async function GET(req, res) {
         `https://api.henrikdev.xyz/valorant/v2/leaderboard/${
           region ?? "na"
         }?start=${start}`,
-        { method: "GET" }
+        { method: "GET", cache: "force-cache" }
       )
     ).json();
   };
