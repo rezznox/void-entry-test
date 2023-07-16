@@ -41,7 +41,6 @@ export default function Home({ searchParams }) {
           scrollThreshold={'100px'}
           next={() => console.log("next event")}
           loader={<h4>Loading...</h4>}
-          scrollableTarget="layout"
         >
           <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <button onClick={() => setStart(start + 1)}>Add one</button>
