@@ -1,29 +1,57 @@
 "use client";
 import { useGetValorantLeaderboardQuery } from "@/redux/api/leaderboard";
 import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function Home() {
+export default function Home({ searchParams }) {
   const [start, setStart] = useState(1);
-  const { data, error, isLoading, isError } =
-    useGetValorantLeaderboardQuery(start);
   const {
-    data: { players },
-  } = (!isError && !isLoading) ? data : { data: { players: undefined } };
+    players = [],
+    error,
+    isLoading,
+    isSuccess,
+  } = useGetValorantLeaderboardQuery(
+    { start, region: searchParams?.region },
+    {
+      selectFromResult: ({ data, isSuccess, isLoading, error }) => {
+        const players = isSuccess ? data.data.players.slice(0, 30) : [];
+        return { isSuccess, isLoading, error, players };
+      },
+    }
+  );
   const playerUiList =
-    players &&
+    isSuccess &&
     players.map((player, i) => (
-      <div key={`${player.PlayerCardID} ${player.puuid} ${i}`} className="flex">
+      <div
+        key={`${player.PlayerCardID} ${player.puuid} ${i}`}
+        className="flex p-24"
+      >
         <div>{player.leaderboardRank}</div>
         <div>{player.gameName}</div>
       </div>
     ));
-  console.log(playerUiList);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div style={{ background: "red", color: "white" }}>{error}</div>
-      {isLoading && <div>Loading</div>}
-      {playerUiList}
-    </main>
+    <>
+      {!!players.length && (
+        <InfiniteScroll
+          dataLength={players.length}
+          hasMore={true}
+          hasChildren={true}
+          scrollThreshold={'100px'}
+          next={() => console.log("next event")}
+          loader={<h4>Loading...</h4>}
+          scrollableTarget="layout"
+        >
+          <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <button onClick={() => setStart(start + 1)}>Add one</button>
+            <div style={{ background: "red", color: "white" }}>{error}</div>
+            {isLoading && <div>Loading</div>}
+
+            {playerUiList}
+          </main>
+        </InfiniteScroll>
+      )}
+    </>
   );
 }

@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <ApiProvider api={leaderboardApi}>
-      <html lang="en">
+      <html id="layout" lang="en">
         <body className={inter.className}>{children}</body>
       </html>
     </ApiProvider>
