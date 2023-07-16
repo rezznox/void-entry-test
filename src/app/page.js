@@ -2,6 +2,8 @@
 import { useGetValorantLeaderboardQuery } from "@/redux/api/leaderboard";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import ValorantLeaderboardRow from "./components/valorant-leaderboard-row";
+import ValorantTableLeaderboard from "./components/valorant-table-leaderboard";
 
 export default function Home({ searchParams }) {
   const [start, setStart] = useState(1);
@@ -19,17 +21,6 @@ export default function Home({ searchParams }) {
       },
     }
   );
-  const playerUiList =
-    isSuccess &&
-    players.map((player, i) => (
-      <div
-        key={`${player.PlayerCardID} ${player.puuid} ${i}`}
-        className="flex p-24"
-      >
-        <div>{player.leaderboardRank}</div>
-        <div>{player.gameName}</div>
-      </div>
-    ));
 
   return (
     <>
@@ -38,7 +29,7 @@ export default function Home({ searchParams }) {
           dataLength={players.length}
           hasMore={true}
           hasChildren={true}
-          scrollThreshold={'100px'}
+          scrollThreshold={"100px"}
           next={() => console.log("next event")}
           loader={<h4>Loading...</h4>}
         >
@@ -46,8 +37,9 @@ export default function Home({ searchParams }) {
             <button onClick={() => setStart(start + 1)}>Add one</button>
             <div style={{ background: "red", color: "white" }}>{error}</div>
             {isLoading && <div>Loading</div>}
-
-            {playerUiList}
+            <ValorantTableLeaderboard
+              players={players}
+            ></ValorantTableLeaderboard>
           </main>
         </InfiniteScroll>
       )}
