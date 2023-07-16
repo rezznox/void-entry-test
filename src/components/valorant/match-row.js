@@ -16,7 +16,7 @@ export default function ValorantMatchRow({ match, playerName, playerTag }) {
     <tr>
       <td>{match.metadata.map}</td>
       <td>{status}</td>
-      <td>{`${kills}/${assists}/${deaths}`}</td>
+      <td>{`${kills}/${deaths}/${assists}`}</td>
       <td>{player.character}</td>
       <td>{`${duration.hours}:${duration.minutes}:${duration.seconds}`}</td>
       <td>{match.metadata.game_start_patched}</td>
