@@ -1,17 +1,9 @@
 import { NextResponse } from "next/server";
 
-const parsePaginationParams = (searchParams) => {
-  const { start: startP } = searchParams;
-  const startInt = parseInt(startP);
-  const start = isNaN(startInt) ? 1 : startInt;
-  return { start };
-};
-
 export async function GET(req, res) {
-  const { region, start } = parsePaginationParams(
-    req.nextUrl.searchParams,
-    (params) => ({ region: params.region })
-  );
+  const search = new URLSearchParams(req.nextUrl.pathname);
+  const region = search.get('region');
+  const start = search.get('start');
 
   const fetchLeaderBoard = async () => {
     return await (
@@ -19,7 +11,7 @@ export async function GET(req, res) {
         `https://api.henrikdev.xyz/valorant/v2/leaderboard/${
           region ?? "na"
         }?start=${start}`,
-        { method: "GET", cache: "force-cache" }
+        { method: "GET" }
       )
     ).json();
   };

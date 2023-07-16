@@ -1,16 +1,10 @@
 import {
-  createStyles,
-  Table,
-  Progress,
-  Anchor,
-  Text,
-  Group,
-  ScrollArea,
-  rem,
+  Table
 } from "@mantine/core";
-import ValorantLeaderboardRow from "./valorant-leaderboard-row";
+import ValorantLeaderboardRow from "./leaderboard-row";
+import withInfiniteScroll from "../with-infinite-scroll";
 
-export default function ValorantTableLeaderboard({ players = [] }) {
+export default function ValorantTableLeaderboard({ list = [], region }) {
   return (
     <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
       <thead>
@@ -22,14 +16,16 @@ export default function ValorantTableLeaderboard({ players = [] }) {
         </tr>
       </thead>
       <tbody>
-        {players.length &&
-          players.map((player, i) => (
+        {list.length > 0 && list.map((player, i) => (
             <ValorantLeaderboardRow
               key={`${player.PlayerCardID} ${player.puuid} ${i}`}
               player={player}
+              region={region}
             ></ValorantLeaderboardRow>
           ))}
       </tbody>
     </Table>
   );
 }
+
+export const ValorantTableLeaderboardWithInfiniteScroll = withInfiniteScroll(ValorantTableLeaderboard);
