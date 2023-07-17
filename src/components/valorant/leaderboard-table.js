@@ -1,12 +1,20 @@
 import {
-  Table
+  Table, createStyles
 } from "@mantine/core";
 import ValorantLeaderboardRow from "./leaderboard-row";
 import withInfiniteScroll from "../with-infinite-scroll";
 
+const useStyles = createStyles((theme) => ({
+  leaderboard: {
+    textAlign: 'left'
+  }
+}));
+
 export default function ValorantTableLeaderboard({ list = [], region }) {
+
+  const {classes} = useStyles();
   return (
-    <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
+    <Table sx={{ minWidth: 800 }} verticalSpacing="xs" className={classes.leaderboard}>
       <thead>
         <tr>
           <th>Rank</th>

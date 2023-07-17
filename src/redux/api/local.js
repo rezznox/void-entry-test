@@ -25,6 +25,15 @@ export const localApi = createApi({
       query: ({ page, limit, search }) => ({
         url: `other/posts?page=${page}&limit=${limit}`,
       }),
+      serializeQueryArgs: ({ endpointName, queryArgs: qa }) => {
+        return endpointName;
+      },
+      merge: (current, result) => {
+        current.posts.push(...result.posts);
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return JSON.stringify(currentArg) !== JSON.stringify(previousArg);
+      },
     }),
     getPost: builder.query({
       query: ({ id }) => ({
@@ -42,5 +51,5 @@ export const {
   useGetPostsQuery,
   useLazyGetPostsQuery,
   useGetPostQuery,
-  useLazyGetPostQuery
+  useLazyGetPostQuery,
 } = localApi;

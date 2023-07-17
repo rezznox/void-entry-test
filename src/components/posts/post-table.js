@@ -1,13 +1,16 @@
 import { Table } from "@mantine/core";
-import PostRow from "./post-card";
+import PostRow from "./post-row";
+import withInfiniteScroll from "../with-infinite-scroll";
 
 export default function PostTable({ list }) {
-  
-    
 
     return (
     <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
       <thead>
+        <tr>
+          <th>Author</th>
+          <th>Content</th>
+        </tr>
       </thead>
       <tbody>
         {list.length > 0 &&
@@ -18,3 +21,5 @@ export default function PostTable({ list }) {
     </Table>
   );
 }
+
+export const PostTableWithInfiniteScroll = withInfiniteScroll(PostTable); 
