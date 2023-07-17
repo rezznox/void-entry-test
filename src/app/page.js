@@ -21,8 +21,7 @@ export default function Home({ searchParams }) {
   );
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <button onClick={() => setStart(start + 1)}>Add one</button>
+    <main className="flex flex-col items-center justify-between">
       {isLoading && <div>Loading</div>}
       <ValorantTableLeaderboardWithInfiniteScroll
         list={players}
