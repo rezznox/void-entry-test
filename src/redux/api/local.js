@@ -19,7 +19,17 @@ export const localApi = createApi({
       },
     }),
     getValorantPlayer: builder.query({
-      query: ({ id }) => ({ url: `valorant/player/${id}` })
+      query: ({ id }) => ({ url: `valorant/player/${id}` }),
+    }),
+    getPosts: builder.query({
+      query: ({ page, limit, search }) => ({
+        url: `other/posts?page=${page}&limit=${limit}`,
+      }),
+    }),
+    getPost: builder.query({
+      query: ({ id }) => ({
+        url: `other/posts/${id}`,
+      }),
     }),
   }),
 });
@@ -29,4 +39,8 @@ export const {
   useLazyGetValorantLeaderboardQuery,
   useGetValorantPlayerQuery,
   useLazyGetValorantPlayerQuery,
+  useGetPostsQuery,
+  useLazyGetPostsQuery,
+  useGetPostQuery,
+  useLazyGetPostQuery
 } = localApi;

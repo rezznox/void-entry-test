@@ -5,8 +5,6 @@ export async function GET(req, res) {
   const {
     pathname
   } = req.nextUrl;
-  console.log('checkpint 1')
-
   const [region, name, tag] = pathname.split('/').slice(-1)[0].split("-");
 
   const fetchPlayerMatches = async () => {
