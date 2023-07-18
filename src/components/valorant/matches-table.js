@@ -16,7 +16,7 @@ export default function ValorantMatchesTable({
   
   const {classes} = useStyles();
   return (
-    <Table sx={{ minWidth: 800 }} verticalSpacing="xs" className={classes.matchesTable}>
+    <Table verticalSpacing="xs" className={classes.matchesTable}>
       <thead>
         <tr>
           <th>Map</th>

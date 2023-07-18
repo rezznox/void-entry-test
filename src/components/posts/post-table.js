@@ -5,7 +5,7 @@ import withInfiniteScroll from "../with-infinite-scroll";
 export default function PostTable({ list }) {
 
     return (
-    <Table sx={{ minWidth: 800 }} verticalSpacing="xs">
+    <Table sx={{ minWidth: 600 }} verticalSpacing="xs">
       <thead>
         <tr>
           <th>Author</th>

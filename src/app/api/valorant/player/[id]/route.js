@@ -15,10 +15,16 @@ export async function GET(req, res) {
       )
     ).json();
   };
-  console.log('checkpint 2')
-  const data = await fetchPlayerMatches();
-  
-  console.log('checkpint 3')
 
-  return NextResponse.json({ matches: data.data });
+  const fetchPlayerProfile = async () => {
+    return await (
+      await fetch(
+        `https://api.henrikdev.xyz/valorant/v1/account/${name}/${tag}`,
+        { method: "GET" }
+      )
+    ).json();
+  };
+  const data = (await Promise.all([fetchPlayerMatches(), fetchPlayerProfile()]));
+  
+  return NextResponse.json({ matches: data[0].data, profile: data[1].data });
 }

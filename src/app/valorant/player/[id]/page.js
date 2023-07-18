@@ -1,5 +1,7 @@
 "use client";
-import { ValorantMatchesTableWithInfiniteScroll } from "@/components/valorant/matches-table";
+import { AppLoaderWholeScreen } from "@/components/loader";
+import ValorantMatchesTable from "@/components/valorant/matches-table";
+import ValorantPlayerCard from "@/components/valorant/player-card";
 import { useGetValorantPlayerQuery } from "@/redux/api/local";
 
 export default function ValorantPlayerProfile({ params: { id } }) {
@@ -7,12 +9,23 @@ export default function ValorantPlayerProfile({ params: { id } }) {
   const [, name, tag] = id.split("-");
 
   const matches = (data && data.matches) || [];
+  const profile = (data && data.profile) || {};
 
   return (
-    <ValorantMatchesTableWithInfiniteScroll
-      list={matches}
-      playerName={name}
-      playerTag={tag}
-    ></ValorantMatchesTableWithInfiniteScroll>
+    <>
+      {!!profile.card && (
+        <>
+          <ValorantPlayerCard profile={profile} />
+          <ValorantMatchesTable
+            list={matches}
+            playerName={name}
+            playerTag={tag}
+          ></ValorantMatchesTable>
+        </>
+      )}
+      {!profile.card &&
+        <AppLoaderWholeScreen sub={64}/>
+      }
+    </>
   );
 }

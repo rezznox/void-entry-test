@@ -7,7 +7,7 @@ export async function GET(req, res) {
   const postText = search.get("search");
   const url = new URL("https://6396aee2a68e43e41808fa18.mockapi.io/api/posts");
   if (postText !== null) {
-    url.searchParams.append("postText", postText);
+    url.searchParams.append("filter", postText);
   }
   if (limit !== null) {
     url.searchParams.append("limit", limit);

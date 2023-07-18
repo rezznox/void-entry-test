@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET(req, res) {
-  const search = new URLSearchParams(req.nextUrl.pathname);
+  const search = new URLSearchParams(req.url.split('?')[1]);
   const region = search.get('region');
   const start = search.get('start');
 

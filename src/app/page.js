@@ -1,33 +1,43 @@
 "use client";
+import { calculateMinDisplayHeightCss } from "@/components/constants";
+import { AppLoaderWholeScreen } from "@/components/loader";
 import { ValorantTableLeaderboardWithInfiniteScroll } from "@/components/valorant/leaderboard-table";
 import { useGetValorantLeaderboardQuery } from "@/redux/api/local";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function Home({ searchParams }) {
-  const [start, setStart] = useState(1);
-  const region = searchParams?.region || "na";
+export default function Home(props) {
   const {
-    players = [],
-    error,
-    isLoading,
-  } = useGetValorantLeaderboardQuery(
+    searchParams: { region = "na", start = 1 },
+  } = props;
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const { players = [], isLoading } = useGetValorantLeaderboardQuery(
     { start, region },
     {
       selectFromResult: ({ data, isSuccess, isLoading, error }) => {
-        const players = isSuccess ? data.data.players.slice(0, 30) : [];
+        const players = isSuccess ? data.data.players.slice(0, 1500) : [];
         return { isSuccess, isLoading, error, players };
       },
     }
   );
 
+  const next = () => {
+    router.push(`${pathname}?start=${Number(start) + players.length}`);
+  };
+
   return (
     <main className="flex flex-col items-center justify-between">
-      {isLoading && <div>Loading</div>}
-      <ValorantTableLeaderboardWithInfiniteScroll
-        list={players}
-        region={region}
-        next={() => console.log("next event")}
-      ></ValorantTableLeaderboardWithInfiniteScroll>
+      {players.length === 0 && <AppLoaderWholeScreen sub={64}/>}
+      {players.length > 0 && (
+        <ValorantTableLeaderboardWithInfiniteScroll
+          list={players}
+          region={region}
+          next={next}
+          height={calculateMinDisplayHeightCss(64)}
+        ></ValorantTableLeaderboardWithInfiniteScroll>
+      )}
     </main>
   );
 }

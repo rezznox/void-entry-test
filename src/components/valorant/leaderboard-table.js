@@ -14,7 +14,7 @@ export default function ValorantTableLeaderboard({ list = [], region }) {
 
   const {classes} = useStyles();
   return (
-    <Table sx={{ minWidth: 800 }} verticalSpacing="xs" className={classes.leaderboard}>
+    <Table sx={{ minWidth: 400 }} verticalSpacing="xs" className={classes.leaderboard}>
       <thead>
         <tr>
           <th>Rank</th>
