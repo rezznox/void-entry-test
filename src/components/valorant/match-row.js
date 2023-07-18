@@ -1,6 +1,19 @@
+import { createStyles } from "@mantine/core";
 import { intervalToDuration } from "date-fns";
 
+const useStyles = createStyles(() => ({
+  Victory: {
+    color: "green",
+    fontWeight: "bold",
+  },
+  Defeat: {
+    color: "red",
+    fontWeight: "bold",
+  },
+}));
+
 export default function ValorantMatchRow({ match, playerName, playerTag }) {
+  const { classes } = useStyles();
   const player = match.players.all_players.find(
     (x) => x.name === playerName && x.tag === playerTag
   );
@@ -10,12 +23,15 @@ export default function ValorantMatchRow({ match, playerName, playerTag }) {
   const {
     stats: { kills, assists, deaths },
   } = player;
-  const duration = intervalToDuration({ start: 0, end: match.metadata.game_length * 1000 });
+  const duration = intervalToDuration({
+    start: 0,
+    end: match.metadata.game_length * 1000,
+  });
 
   return (
     <tr>
       <td>{match.metadata.map}</td>
-      <td>{status}</td>
+      <td className={classes[status]}>{status}</td>
       <td>{`${kills}/${deaths}/${assists}`}</td>
       <td>{player.character}</td>
       <td>{`${duration.hours}:${duration.minutes}:${duration.seconds}`}</td>

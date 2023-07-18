@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { usePathname } from "next/navigation";
+import { orangeColorVoid } from "../constants";
 
 const HEADER_HEIGHT = rem(84);
 
@@ -87,8 +88,8 @@ const useStyles = createStyles((theme) => ({
     color: theme.white,
     opacity: 1,
     borderBottomColor:
-      theme.colorScheme === "dark" ? theme.white : "rgb(230, 162, 30)",
-    backgroundColor: "rgb(230, 162, 30)",
+      theme.colorScheme === "dark" ? theme.white : orangeColorVoid,
+    backgroundColor: orangeColorVoid,
   },
 }));
 

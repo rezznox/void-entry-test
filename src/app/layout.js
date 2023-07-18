@@ -6,12 +6,13 @@ import { MantineProvider, createStyles, rem } from "@mantine/core";
 import { localApi } from "@/redux/api/local";
 import AppHeader from "@/components/header";
 import AppFooter from "@/components/footer";
+import { calculateMinDisplayHeightCss } from "@/components/constants";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const useStyle = createStyles(({ theme }) => ({
+const useStyle = createStyles(() => ({
   content: {
-    minHeight: `calc(100svh - ${rem(164)})`,
+    minHeight: calculateMinDisplayHeightCss(),
     minWidth: 400,
   },
   contentFiller: {
